@@ -1,6 +1,10 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { DM_Sans, Playfair_Display } from 'next/font/google'
 import './globals.css'
+
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-sans', display: 'swap' })
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-display', display: 'swap' })
 
 export const metadata: Metadata = {
   title: 'Faergo — Ginástica laboral e fisioterapia do trabalho para empresas | São Paulo',
@@ -10,8 +14,8 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', title: 'Faergo — Saúde ocupacional para empresas', description: 'Ginástica laboral e fisioterapia do trabalho em São Paulo.' },
 }
 
-export const viewport: Viewport = { colorScheme: 'light', themeColor: '#FBF9F4' }
+export const viewport: Viewport = { colorScheme: 'light dark', themeColor: '#FBF9F4' }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="pt-BR"><body className="antialiased">{children}{process.env.NODE_ENV === 'production' && <Analytics />}</body></html>
+  return <html lang="pt-BR"><body className={`${dmSans.variable} ${playfair.variable} antialiased`}>{children}{process.env.NODE_ENV === 'production' && <Analytics />}</body></html>
 }

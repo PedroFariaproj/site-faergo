@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { ArrowUpRight, ChevronDown, Menu, Minus, Plus, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { ArrowUpRight, ChevronDown, Menu, Minus, Moon, Plus, Sun, X } from 'lucide-react'
 
 const assets = {
   logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-EhPbjzwjr8QIDcKTaJaQjnNJhh9q3F.png',
@@ -45,6 +45,11 @@ function SectionHeader({ eyebrow, title, children }: { eyebrow: string; title: s
 export default function Page() {
   const [openService, setOpenService] = useState<number | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [darkMode, setDarkMode] = useState(false)
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode ? 'dark' : 'light'
+  }, [darkMode])
 
   function submitWhatsApp(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -62,7 +67,7 @@ export default function Page() {
         <button className="menu-toggle" aria-label="Abrir menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
         <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Navegação principal">
           <a href="#servicos" onClick={() => setMenuOpen(false)}>Serviços</a><a href="#processo" onClick={() => setMenuOpen(false)}>Como funciona</a><a href="#sobre" onClick={() => setMenuOpen(false)}>Sobre</a><a href="#contato" onClick={() => setMenuOpen(false)}>Contato</a>
-          <a className="button button-orange nav-cta" href="#contato" onClick={() => setMenuOpen(false)}>Solicitar proposta <ArrowUpRight /></a>
+          <button className="theme-toggle" type="button" onClick={() => setDarkMode(!darkMode)} aria-label={darkMode ? 'Ativar modo claro' : 'Ativar modo escuro'} aria-pressed={darkMode}>{darkMode ? <Sun /> : <Moon />}<span>{darkMode ? 'Modo claro' : 'Modo escuro'}</span></button><a className="button button-orange nav-cta" href="#contato" onClick={() => setMenuOpen(false)}>Solicitar proposta <ArrowUpRight /></a>
         </nav>
       </header>
       <div className="hero-content container"><Eyebrow>Fisioterapia avançada para empresas</Eyebrow><h1>Saúde ocupacional que se vê no chão de fábrica e no resultado.</h1><p>Ginástica laboral, fisioterapia do trabalho e programas de bem-estar conduzidos pela Dra. Fabiana Paulo, com indicadores reportados ao RH e à diretoria.</p><div className="hero-actions"><a className="button button-orange" href="#contato">Agendar diagnóstico gratuito <ArrowUpRight /></a><a className="button button-outline" href="#servicos">Ver serviços</a></div></div>

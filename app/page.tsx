@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { ArrowUpRight, ChevronDown, Menu, Minus, Moon, Plus, Sun, X } from 'lucide-react'
+import { ArrowUpRight, Check, ChevronDown, Menu, Minus, Moon, Plus, Sun, X } from 'lucide-react'
 
 const assets = {
   logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-EhPbjzwjr8QIDcKTaJaQjnNJhh9q3F.png',
@@ -29,6 +29,12 @@ const services = [
   ['Mindfulness e workshops de relaxamento', 'Técnicas de meditação e atenção plena para reduzir o estresse.', 'Encontros guiados de respiração, atenção plena e relaxamento para equipes sob pressão.', 'Pontuais em campanhas de saúde mental ou recorrentes em um programa anual.'],
   ['Fisioterapia ortopédica', 'Suporte completo no pré e pós-operatório ortopédico.', 'Foco no alívio da dor, redução de processos inflamatórios e fortalecimento muscular, com recuperação mais rápida, segura e eficaz.', 'Presencial ou domiciliar, também para colaboradores em retorno ao trabalho.'],
   ['Palestras sobre saúde e SIPAT', 'Palestras educativas sobre ergonomia, saúde ocupacional e prevenção.', 'Postura, prevenção de LER/DORT, pausas e autocuidado, em linguagem prática.', 'Programação completa da SIPAT com atividades especializadas.'],
+]
+
+const plans = [
+  { name: 'Faergo Essencial', category: 'Básico', phrase: 'Para começar a cuidar da equipe.', items: ['Ginástica Laboral.', 'Orientações sobre postura e hábitos saudáveis.', 'Planejamento das atividades.', 'Controle de participação e relatório mensal.'], button: 'Solicitar proposta do Essencial', message: 'Olá! Conheci os planos no site da Faergo e gostaria de solicitar uma proposta do plano Faergo Essencial para minha empresa.' },
+  { name: 'Faergo Movimento', category: 'Intermediário', phrase: 'Para ampliar o cuidado com movimento e ergonomia.', highlight: 'Tudo do Essencial, mais:', items: ['Blitz Postural: orientações e ajustes no posto de trabalho.', 'Conteúdos educativos para compartilhar com a equipe.', 'Acompanhamento de participação e satisfação.'], button: 'Solicitar proposta do Movimento', message: 'Olá! Conheci os planos no site da Faergo e gostaria de solicitar uma proposta do plano Faergo Movimento para minha empresa.' },
+  { name: 'Faergo 360°', category: 'Premium', phrase: 'Um programa completo de saúde e bem-estar no trabalho.', highlight: 'Tudo do Movimento, mais:', items: ['Quick Massage.', 'Mindfulness e workshops de relaxamento.', 'Palestras de saúde e ergonomia.', 'Jogos e dinâmicas corporativas.', 'Ações para SIPAT e campanhas de saúde.'], button: 'Solicitar proposta do Faergo 360°', message: 'Olá! Conheci os planos no site da Faergo e gostaria de solicitar uma proposta do plano Faergo 360° para minha empresa.' },
 ]
 
 const testimonials = [
@@ -80,7 +86,7 @@ export default function Page() {
         <a href="#inicio" aria-label="Faergo início"><img className="logo" src={assets.logo} alt="Faergo Fisioterapia Avançada" /></a>
         <button className="menu-toggle" aria-label="Abrir menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
         <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Navegação principal">
-          <a href="#servicos" onClick={() => setMenuOpen(false)}>Serviços</a><a href="#processo" onClick={() => setMenuOpen(false)}>Como funciona</a><a href="#sobre" onClick={() => setMenuOpen(false)}>Sobre</a><a href="#contato" onClick={() => setMenuOpen(false)}>Contato</a>
+          <a href="#servicos" onClick={() => setMenuOpen(false)}>Serviços</a><a href="#planos" onClick={() => setMenuOpen(false)}>Planos</a><a href="#processo" onClick={() => setMenuOpen(false)}>Como funciona</a><a href="#sobre" onClick={() => setMenuOpen(false)}>Sobre</a><a href="#contato" onClick={() => setMenuOpen(false)}>Contato</a>
           <button className="theme-toggle" type="button" onClick={() => setDarkMode(!darkMode)} aria-label={darkMode ? 'Ativar modo claro' : 'Ativar modo escuro'} aria-pressed={darkMode}>{darkMode ? <Sun /> : <Moon />}<span>{darkMode ? 'Modo claro' : 'Modo escuro'}</span></button><a className="button button-orange nav-cta" href="https://wa.me/5511987148704" target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>Solicitar proposta <ArrowUpRight /></a>
         </nav>
       </header>
@@ -90,6 +96,8 @@ export default function Page() {
     <section className="stats container-wide"><div><strong>5 anos</strong><span>em saúde ocupacional</span></div><div><strong>40+</strong><span>empresas atendidas</span></div><div><strong>6.000</strong><span>colaboradores em programa</span></div><div><strong>NR-1 e NR-17</strong><span>conformidade como base</span></div></section>
 
     <section className="section container" id="servicos"><SectionHeader eyebrow="O que fazemos" title="Serviços"><p>Uma gama completa de serviços para transformar seu ambiente de trabalho em um verdadeiro espaço de bem-estar.</p><span className="section-note">Clique em um serviço para ver os detalhes</span></SectionHeader><div className="service-list">{services.map((service, i) => <div className={`service-item ${openService === i ? 'active' : ''}`} key={service[0]}><button className="service-trigger" onClick={() => setOpenService(openService === i ? null : i)} aria-expanded={openService === i}><span className={`service-line line-${i % 2}`} /><span className="service-number">0{i + 1}</span><span className="service-name">{service[0]}</span><span className="service-short">{service[1]}</span><span className="circle-button">{openService === i ? <Minus /> : <Plus />}</span></button>{openService === i && <div className="service-detail"><img src={assets.services[i]} alt={`Equipe Faergo realizando ${service[0]}`} /><div><p>{service[2]}</p><p>{service[3]}</p><div className="detail-actions"><a className="button button-teal" href="https://wa.me/5511987148704" target="_blank" rel="noreferrer">Solicitar este serviço <ArrowUpRight /></a><button className="text-button" onClick={() => setOpenService(null)}>Fechar</button></div></div></div>}</div>)}</div></section>
+
+    <section className="section plans-section" id="planos"><div className="container"><SectionHeader eyebrow="Planos Faergo" title="Planos Faergo"><p>Movimento, ergonomia e bem-estar para sua equipe.</p><span className="section-note">Escolha o plano que combina com o momento da sua empresa. Nós adaptamos as ações aos setores, turnos e à rotina de trabalho.</span></SectionHeader><div className="plans-grid">{plans.map((plan) => <article className={`plan-card ${plan.name === 'Faergo Movimento' ? 'plan-featured' : ''}`} key={plan.name}><div><span className="plan-category">{plan.category}</span><h3>{plan.name}</h3><p className="plan-phrase">{plan.phrase}</p>{plan.highlight && <p className="plan-highlight">{plan.highlight}</p>}<ul>{plan.items.map((item) => <li key={item}><Check />{item}</li>)}</ul></div><a className="button button-teal plan-button" href={`https://wa.me/5511987148704?text=${encodeURIComponent(plan.message)}`} target="_blank" rel="noreferrer">{plan.button} <ArrowUpRight /></a></article>)}</div></div></section>
 
     <section className="section section-pale" id="processo"><div className="container"><SectionHeader eyebrow="Como funciona" title="Do diagnóstico ao próximo ciclo." /><div className="process-grid">{[['01','Diagnóstico','Visita técnica aos postos, leitura de absenteísmo e conversa com RH e SESMT.'],['02','Plano de trabalho','Escopo, cronograma por turno, metas de adesão e indicadores acordados.'],['03','Execução','Sessões em campo, com registro de presença e ajuste contínuo por setor.'],['04','Relatório','Indicadores, evolução das queixas e recomendações para o ciclo seguinte.']].map((item, i) => <div className={`process-card card-${i}`} key={item[0]}><span>{item[0]}</span><h3>{item[1]}</h3><p>{item[2]}</p></div>)}</div></div></section>
 
